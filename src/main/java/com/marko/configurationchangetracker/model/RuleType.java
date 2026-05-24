@@ -1,0 +1,15 @@
+package com.marko.configurationchangetracker.model;
+
+public enum RuleType {
+    CREDIT_LIMIT,
+    TRANSACTION_LIMIT,
+    DAILY_TRANSFER_LIMIT,
+    APPROVAL_POLICY,
+    WITHDRAWAL_LIMIT,
+    ACCOUNT_STATUS,
+    CARD_LIMIT,
+    PAYMENT_VALIDATION_RULE,
+    LOAN_APPROVAL_POLICY,
+    TWO_FACTOR_AUTHENTICATION,
+    FRAUD_DETECTION_LEVEL
+}
