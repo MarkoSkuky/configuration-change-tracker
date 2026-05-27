@@ -21,10 +21,8 @@ public record ConfigurationChangeRequestBody(
     @NotNull
     ChangeAction changeAction,
 
-    @NotBlank
     String oldValue,
 
-    @NotBlank
     String newValue,
 
     @NotNull

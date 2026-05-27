@@ -21,7 +21,7 @@ public class ConfigurationChange {
 
     private RuleType ruleType;
 
-    private ChangeAction action;
+    private ChangeAction changeAction;
 
     private String oldValue;
 
