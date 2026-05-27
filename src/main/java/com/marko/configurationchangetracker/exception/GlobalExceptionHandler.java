@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 
@@ -83,6 +84,19 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(500).body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(
+        MethodArgumentTypeMismatchException e
+    ) {
+        ErrorResponse response = new ErrorResponse(
+            400,
+            "Invalid request parameter value",
+            LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(400).body(response);
     }
 
 }

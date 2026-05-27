@@ -16,7 +16,7 @@ public record ConfigurationChangeResponse(
 
     RuleType ruleType,
 
-    ChangeAction action,
+    ChangeAction changeAction,
 
     String oldValue,
 

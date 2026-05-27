@@ -106,7 +106,7 @@ public class ConfigurationChangeService {
 
         if (!valid) {
             throw new InvalidConfigurationChangeException(
-                "Invalid values for action type " + requestBody.changeAction()
+                "Invalid values for changeAction type " + requestBody.changeAction()
             );
         }
     }
