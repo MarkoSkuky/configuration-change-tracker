@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doAnswer;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,7 +48,6 @@ public class ConfigurationChangeServiceTest {
 
     @BeforeEach
     void setUp() {
-
         change = new ConfigurationChange();
         change.setId(1L);
         change.setClientId("client-123");
@@ -73,11 +72,12 @@ public class ConfigurationChangeServiceTest {
             true
         );
 
-        doAnswer(invocation -> {
-            ConfigurationChange savedChange = invocation.getArgument(0);
-            savedChange.setId(1L);
-            return savedChange;
-        }).when(repository).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        when(repository.save(any(ConfigurationChange.class)))
+            .thenAnswer(invocation -> {
+                ConfigurationChange savedChange = invocation.getArgument(0);
+                savedChange.setId(1L);
+                return savedChange;
+            });
 
         ConfigurationChangeResponse response = service.createChange(requestBody);
 
@@ -91,8 +91,8 @@ public class ConfigurationChangeServiceTest {
         assertTrue(response.critical());
         assertNotNull(response.createdAt());
 
-        verify(repository, times(1)).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
-        verify(monitoringNotificationService, times(1)).notifyCriticalChange(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        verify(repository, times(1)).save(any(ConfigurationChange.class));
+        verify(monitoringNotificationService, times(1)).notifyCriticalChange(any(ConfigurationChange.class));
     }
 
     @Test
@@ -107,15 +107,16 @@ public class ConfigurationChangeServiceTest {
             true
         );
 
-        doAnswer(invocation -> {
-            ConfigurationChange savedChange = invocation.getArgument(0);
-            savedChange.setId(2L);
-            return savedChange;
-        }).when(repository).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        when(repository.save(any(ConfigurationChange.class)))
+            .thenAnswer(invocation -> {
+                ConfigurationChange savedChange = invocation.getArgument(0);
+                savedChange.setId(2L);
+                return savedChange;
+            });
 
         service.createChange(requestBody);
 
-        verify(monitoringNotificationService, times(1)).notifyCriticalChange(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        verify(monitoringNotificationService, times(1)).notifyCriticalChange(any(ConfigurationChange.class));
     }
 
     @Test
@@ -131,8 +132,8 @@ public class ConfigurationChangeServiceTest {
         );
 
         assertThrows(InvalidConfigurationChangeException.class, () -> service.createChange(requestBody));
-        verify(repository, never()).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
-        verify(monitoringNotificationService, never()).notifyCriticalChange(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        verify(repository, never()).save(any(ConfigurationChange.class));
+        verify(monitoringNotificationService, never()).notifyCriticalChange(any(ConfigurationChange.class));
     }
 
     @Test
@@ -148,8 +149,8 @@ public class ConfigurationChangeServiceTest {
         );
 
         assertThrows(InvalidConfigurationChangeException.class, () -> service.createChange(requestBody));
-        verify(repository, never()).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
-        verify(monitoringNotificationService, never()).notifyCriticalChange(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        verify(repository, never()).save(any(ConfigurationChange.class));
+        verify(monitoringNotificationService, never()).notifyCriticalChange(any(ConfigurationChange.class));
     }
 
     @Test
@@ -165,8 +166,8 @@ public class ConfigurationChangeServiceTest {
         );
 
         assertThrows(InvalidConfigurationChangeException.class, () -> service.createChange(requestBody));
-        verify(repository, never()).save(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
-        verify(monitoringNotificationService, never()).notifyCriticalChange(org.mockito.ArgumentMatchers.any(ConfigurationChange.class));
+        verify(repository, never()).save(any(ConfigurationChange.class));
+        verify(monitoringNotificationService, never()).notifyCriticalChange(any(ConfigurationChange.class));
     }
 
     @Test

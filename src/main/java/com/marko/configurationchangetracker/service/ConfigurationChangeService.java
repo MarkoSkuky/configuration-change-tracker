@@ -99,9 +99,9 @@ public class ConfigurationChangeService {
         String newValue = requestBody.newValue();
 
         boolean valid = switch (requestBody.changeAction()) {
-            case ADD -> oldValue == null && newValue != null;
-            case UPDATE -> oldValue != null && newValue != null;
-            case DELETE -> oldValue != null && newValue == null;
+            case ADD -> oldValue == null && (newValue != null && !newValue.isBlank());
+            case UPDATE -> (oldValue != null && !oldValue.isBlank()) && (newValue != null && !newValue.isBlank());
+            case DELETE -> (oldValue != null && !oldValue.isBlank()) && newValue == null;
         };
 
         if (!valid) {
