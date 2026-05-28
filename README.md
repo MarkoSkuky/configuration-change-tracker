@@ -29,6 +29,12 @@ The `service` layer contains the main business logic:
 - stores and retrieves data through the repository
 - triggers monitoring notifications for critical changes
 
+### Critical change handling
+The `critical` flag is provided by the API client instead of being calculated internally.
+The application assumes that the system performing the actual configuration change is also responsible for determining whether the change should be considered critical.
+The tracker service simply stores this information and triggers the monitoring notification when required.
+If business rules for criticality become centralized in the future, the logic could be moved into the service layer.
+
 ### Repository
 The `repository` layer provides in-memory persistence using a map-based storage.
 
